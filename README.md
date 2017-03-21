@@ -16,7 +16,17 @@ TODO
 
 ### Kubernetes
 
-TODO
+Create the namespaces:
+
+```bash
+kubectl apply -f kubernetes/namespaces.yaml
+```
+
+Deploy the application:
+
+```bash
+kubectl apply -f kubernetes/simple-chat.yaml
+```
 
 ### Docker Swarm
 
