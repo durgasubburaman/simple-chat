@@ -1,0 +1,31 @@
+version: '3'
+networks:
+  simplechat:
+    external: true
+services:
+  redis:
+    image: redis:3.2
+    networks:
+      - simplechat
+    ports:
+      - 6379
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == worker
+  simple-chat-api:
+    image: jcorioland/simple-chat-api:linux-1.0
+    networks:
+      - simplechat
+    environment: 
+      SIMPLE_CHAT_REDIS_ENDPOINT: "redis:6379"
+    ports:
+      - "82:82"
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == worker
