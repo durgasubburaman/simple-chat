@@ -14,7 +14,7 @@ services:
       replicas: 1
       placement:
         constraints:
-          - node.role == worker
+          - node.role == manager
   simple-chat-api:
     image: jcorioland/simple-chat-api:linux-1.0
     networks:
@@ -23,6 +23,18 @@ services:
       SIMPLE_CHAT_REDIS_ENDPOINT: "redis:6379"
     ports:
       - "82:82"
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
+  simple-chat-client:
+    image: jcorioland/simple-chat-client:windowsservercore-1.0
+    networks:
+      - simplechat
+    ports:
+      - "80:80"
     deploy:
       mode: replicated
       replicas: 1
